@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', 'BooksController@index')->name('home');
+
+Route::get('/bookcreate', 'BooksController@create')->name('bookCreate');
+
+Route::get('/bookstore', 'BooksController@store');
+Route::post('/bookstore', 'BooksController@store')->name('bookStore');
+
+Route::get('/bookedit/{id}', 'BooksController@edit')->name('bookEdit');
+
+Route::get('/bookupdate/{id}', 'BooksController@update');
+Route::put('/bookupdate/{id}', 'BooksController@update')->name('bookUpdate');
+
+Route::delete('/bookdelete/{id}', 'BooksController@destroy')->name('bookDelete');
+

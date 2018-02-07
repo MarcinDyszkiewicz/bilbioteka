@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Book;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -13,7 +14,9 @@ class BooksController extends Controller
      */
     public function index()
     {
-        //
+        $books = Book::all();
+
+        return view('home', ['books' => $books]);
     }
 
     /**
@@ -23,7 +26,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        return view('bookCreate');
     }
 
     /**
@@ -34,7 +37,21 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, array(
+
+            'author' => 'required|max:200',
+            'title' => 'required|max:200'
+        ));
+
+        $book = new Book;
+
+        $book->author = $request->author;
+        $book->title = $request->title;
+
+        $book->save();
+
+        return redirect()->route('home');
     }
 
     /**
@@ -56,7 +73,9 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+
+        return view('bookEdit', ['book' => $book]);
     }
 
     /**
@@ -68,7 +87,20 @@ class BooksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, array(
+
+            'author' => 'request|max:200',
+            'title' => 'request|max:200'
+        ));
+
+        $book = Book::find($id);
+
+        $book->author = $request->input('author');
+        $book->title = $request->input('title');
+
+        $book->save();
+
+        return redirect()->route('home');
     }
 
     /**
@@ -79,6 +111,9 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+        $book->delete();
+
+        return redirect()->route('home');
     }
 }
