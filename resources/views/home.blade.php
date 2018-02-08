@@ -19,7 +19,7 @@
 
             <table style="width: 50%">
                 <tr>
-                    <th>#</th>
+                    <th>#ID</th>
                     <th>Autor</th>
                     <th>Tytuł</th>
                     <th></th>
@@ -29,7 +29,7 @@
                 <tr style="text-align: center">
                     <td>{{$book->id}}</td>
                     <td>{{$book->author}}</td>
-                    <td>"{{$book->title}}"</td>
+                    <td>"{{str_limit($book->title, 10, '...')}}"</td>
                     <td><form action="{{route('bookEdit', $book->id)}}">
                             <input type="submit" value="Edytuj">
                         </form>
@@ -59,10 +59,10 @@
 
         <form method="POST" action="{{route('bookStore')}}">
             {{ csrf_field() }}
-            Title: <input name="author" type="text">
+            Autor: <input name="author" type="text">
             <br>
             <br>
-            Body: <input name="title" type="text">
+            Tytuł: <input name="title" type="text">
             <br>
             <br>
             <input type="submit" value="Submit">

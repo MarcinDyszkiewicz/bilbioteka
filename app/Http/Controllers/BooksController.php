@@ -89,8 +89,8 @@ class BooksController extends Controller
     {
         $this->validate($request, array(
 
-            'author' => 'request|max:200',
-            'title' => 'request|max:200'
+            'author' => 'required|max:200',
+            'title' => 'required|max:200'
         ));
 
         $book = Book::find($id);
